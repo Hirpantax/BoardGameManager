@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -22,11 +23,9 @@ namespace BoardGameManager
         private int playerInitialPoint = 0;
         private int roundCount = 0;
 
-        public UnoFlip(int gameMode, int playerCount, List<string> playerNameList)
+        public UnoFlip(int gameMode)
         {
             gameName = "Uno Flip";
-            this.playerCount = playerCount;
-            this.playerNameList = playerNameList;
             
             switch (gameMode)
             {
@@ -41,14 +40,12 @@ namespace BoardGameManager
 
             }
 
-            for (int i = 0; i < playerCount; i++)
-            {
-                playerPointList.Add(playerInitialPoint);
-            }
         }
 
         public override void PlayGame()
         {
+           InitializeGame();
+
            int pointCapPlayer = IsGameOver();
            while (pointCapPlayer == -1)
             {
@@ -87,7 +84,7 @@ namespace BoardGameManager
             Console.WriteLine("Play again? (Y/n) ");
             string input = Console.ReadLine();
 
-            while (!(string.IsNullOrEmpty(input) || 
+            while (!(!string.IsNullOrEmpty(input) && 
                 input.Equals("yes", StringComparison.OrdinalIgnoreCase) ||
                 input.Equals("no", StringComparison.OrdinalIgnoreCase) ||
                 input.Equals("y", StringComparison.OrdinalIgnoreCase) ||
@@ -132,11 +129,11 @@ namespace BoardGameManager
                     for (int i = 0; i < playerCount; i++)
                     {
                         if (i == winnerID) continue;
-                        Console.Write("Enter the points for {0}: ", playerNameList[i]);
+                        Console.Write("Enter the amount of points {0} is left with: ", playerNameList[i]);
                         
-                        while (!int.TryParse(Console.ReadLine(), out point))
+                        while (!int.TryParse(Console.ReadLine(), out point) || point < 0)
                         {
-                            Console.WriteLine("Invalid input. Please enter again: ");
+                            Console.Write("Invalid input. Please enter again: ");
                         }
                         pointSum += point;
                     }
@@ -178,6 +175,31 @@ namespace BoardGameManager
                 Console.Write(i + 1 + "\t\t");
                 Console.Write(playerNameList[i] + "\t\t");
                 Console.WriteLine(playerPointList[i]);
+            }
+        }
+
+        private void InitializeGame()
+        {
+            string playerNameTemp;
+            Console.Write("Enter the amount of players: ");
+            
+            while (!int.TryParse(Console.ReadLine(), out playerCount))
+            {
+                Console.WriteLine("Invalid input. Please enter again: ");
+            }
+
+            for (int i = 0; i < playerCount; i++)
+            {
+                Console.Write("Enter the name of the player number {0}: ", i + 1);
+                playerNameTemp = Console.ReadLine();
+
+                while (string.IsNullOrEmpty(playerNameTemp))
+                {
+                    Console.WriteLine("Invalid input. Please enter again: ");
+                    playerNameTemp = Console.ReadLine();
+                }
+                playerNameList.Add(playerNameTemp);
+                playerPointList.Add(playerInitialPoint);
             }
         }
 
@@ -232,5 +254,6 @@ namespace BoardGameManager
             Console.Clear();
             PlayGame();
         }
+
     }
 }
