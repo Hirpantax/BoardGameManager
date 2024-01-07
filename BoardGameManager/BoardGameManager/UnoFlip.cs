@@ -159,20 +159,19 @@ namespace BoardGameManager
                     for (int i = 0; i < playerCount; i++)
                     {
                         if (i == winnerID) continue;
-                        Console.WriteLine("Enter the points for {0}: ", playerNameList[i]);
+                        Console.Write("Enter the points {0} is left with: ", playerNameList[i]);
 
                         while (!int.TryParse(Console.ReadLine(), out point))
                         {
-                            Console.WriteLine("Invalid input. Please enter again: ");
+                            Console.Write("Invalid input. Please enter again: ");
                         }
-                        /*
+                        
                         previousPoints = playerPointList[i];
                         newPoints = previousPoints + point;
                         UpdatePointsCommand updateCommandLowest = new UpdatePointsCommand(this, i, previousPoints, newPoints);
-                      
                         ExecuteCommand(updateCommandLowest);
-                        */
-                        playerPointList[i] += point;
+                        
+                        //playerPointList[i] += point;
                     }
 
                     break;
@@ -182,7 +181,20 @@ namespace BoardGameManager
             Console.Write("Press U to undo the last round, or any other key to continue.");
             if (Console.ReadKey().Key == ConsoleKey.U)
             {
-                UndoLastCommand();
+                switch (gameMode)
+                {
+                    case GameMode.highestIsWinner:
+                        UndoLastCommand();
+                        break;
+
+                    case GameMode.lowestIsWinner:
+                        for (int i = 0; i < playerCount - 1; i++)
+                        {
+                            UndoLastCommand();
+                        }
+                        break;
+                }
+                
                 Console.WriteLine();
                 Console.WriteLine("Last round undone.");
                 roundCount--;
