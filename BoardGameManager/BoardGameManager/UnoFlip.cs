@@ -129,6 +129,7 @@ namespace BoardGameManager
             int pointSum = 0; //Sum of the losers' points
             int point;
             int previousPoints;
+            int newPoints;
             switch (gameMode)
             {
                 case GameMode.highestIsWinner:
@@ -144,10 +145,13 @@ namespace BoardGameManager
                         }
                         pointSum += point;
                     }
-
-                    //previousPoints
-                    //Add the pointSum to winner's points
-                    playerPointList[winnerID] += pointSum;
+                    
+                    previousPoints = playerPointList[winnerID];
+                    newPoints = previousPoints + pointSum;
+                    UpdatePointsCommand updateCommandHighest = new UpdatePointsCommand(this, winnerID, previousPoints, newPoints);
+                    ExecuteCommand(updateCommandHighest);
+                    
+                    //playerPointList[winnerID] += pointSum;
 
                     break;
 
@@ -161,10 +165,27 @@ namespace BoardGameManager
                         {
                             Console.WriteLine("Invalid input. Please enter again: ");
                         }
+                        /*
+                        previousPoints = playerPointList[i];
+                        newPoints = previousPoints + point;
+                        UpdatePointsCommand updateCommandLowest = new UpdatePointsCommand(this, i, previousPoints, newPoints);
+                      
+                        ExecuteCommand(updateCommandLowest);
+                        */
                         playerPointList[i] += point;
                     }
 
                     break;
+            }
+
+            PrintPlayerList();
+            Console.Write("Press U to undo the last round, or any other key to continue.");
+            if (Console.ReadKey().Key == ConsoleKey.U)
+            {
+                UndoLastCommand();
+                Console.WriteLine();
+                Console.WriteLine("Last round undone.");
+                roundCount--;
             }
 
             Console.WriteLine();
@@ -205,6 +226,8 @@ namespace BoardGameManager
             {
                 Console.WriteLine("Invalid input. Please enter again: ");
             }
+
+            gameMode--; //Index
 
             this.gameMode = gameModes[gameMode];
 
