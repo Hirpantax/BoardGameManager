@@ -15,7 +15,7 @@ namespace BoardGameManager
             highestIsWinner, //The WINNER is the first player to reach 500 points
             lowestIsWinner //When one player reaches 500 points, the player with the lowest points is the winner.
         }
-
+        private Stack<ICommand> commandHistory = new Stack<ICommand>();
         private const int pointCap = 500;
         private GameMode gameMode;
         private List<string> playerNameList = new List<string>();
@@ -26,6 +26,26 @@ namespace BoardGameManager
         public UnoFlip()
         {
             gameName = "Uno Flip";
+        }
+
+        public override void UpdatePlayerPoints(int playerID, int points)
+        {
+            playerPointList[playerID] = points;
+        }
+
+        public override void ExecuteCommand(ICommand command)
+        {
+            command.Execute();
+            commandHistory.Push(command);
+        }
+
+        public override void UndoLastCommand()
+        {
+            if (commandHistory.Any())
+            {
+                var lastCommand = commandHistory.Pop();
+                lastCommand.Undo();
+            }
         }
 
         public override void PlayGame()
@@ -108,6 +128,7 @@ namespace BoardGameManager
 
             int pointSum = 0; //Sum of the losers' points
             int point;
+            int previousPoints;
             switch (gameMode)
             {
                 case GameMode.highestIsWinner:
@@ -124,6 +145,7 @@ namespace BoardGameManager
                         pointSum += point;
                     }
 
+                    //previousPoints
                     //Add the pointSum to winner's points
                     playerPointList[winnerID] += pointSum;
 
@@ -260,6 +282,7 @@ namespace BoardGameManager
             Console.Clear();
             PlayGame();
         }
+
 
     }
 }

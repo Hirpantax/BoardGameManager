@@ -12,5 +12,11 @@ namespace BoardGameManager
         protected int playerCount;
 
         public abstract void PlayGame();
+
+        public abstract void UpdatePlayerPoints(int playerID, int points);
+
+        public abstract void ExecuteCommand(ICommand command);
+
+        public abstract void UndoLastCommand();
     }
 }
