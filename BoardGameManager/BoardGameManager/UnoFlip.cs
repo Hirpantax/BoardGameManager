@@ -23,23 +23,9 @@ namespace BoardGameManager
         private int playerInitialPoint = 0;
         private int roundCount = 0;
 
-        public UnoFlip(int gameMode)
+        public UnoFlip()
         {
             gameName = "Uno Flip";
-            
-            switch (gameMode)
-            {
-                default:
-                case 1:
-                    this.gameMode = GameMode.highestIsWinner;
-                    break;
-
-                case 2:
-                    this.gameMode= GameMode.lowestIsWinner;
-                    break;
-
-            }
-
         }
 
         public override void PlayGame()
@@ -180,6 +166,26 @@ namespace BoardGameManager
 
         private void InitializeGame()
         {
+            string[] gameModeNames = Enum.GetNames(typeof(GameMode));
+            GameMode[] gameModes = (GameMode[])Enum.GetValues(typeof(GameMode));
+            int gameMode;
+            Console.WriteLine();
+            Console.WriteLine("Game Modes:");
+
+            for (int i = 0; i < gameModeNames.Length; i++)
+            {
+                Console.WriteLine("{0}. {1}", i + 1, gameModeNames[i]);
+            }
+
+            Console.Write("Enter the ID of the game mode you want to play: ");
+
+            while (!int.TryParse(Console.ReadLine(), out gameMode) || !(gameMode >= 1 && gameMode <= gameModeNames.Length))
+            {
+                Console.WriteLine("Invalid input. Please enter again: ");
+            }
+
+            this.gameMode = gameModes[gameMode];
+
             string playerNameTemp;
             Console.Write("Enter the amount of players: ");
             
