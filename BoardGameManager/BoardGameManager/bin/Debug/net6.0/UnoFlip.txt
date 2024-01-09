@@ -1,0 +1,57 @@
+Rules:
+Always make sure ALL the cards are always facing one way, whether it be the Dark or Light Side, depending on what side is in play at the moment; however gameplay always begins on the Light Side. Choose a dealer by having everyone draw a card from the deck. Looking at the Light Side, the player with the highest number (Action cards count as zero) becomes the dealer.
+
+The dealer then shuffles the deck and deals out 7 cards to each player. Since gameplay begins with the Light Side, hold the cards with the Light Side facing you, while the outer Dark Side faces everyone else.
+
+The deck is then placed down with the Light Side facing down (unseen), while the Dark Side faces up. This is the Draw pile. The top card on the Draw pile is then turned up and placed down to form a separate Discard pile. Obviously, this first card will have its Light side facing up so everyone can see what it is.
+
+Action Cards:
+--Light Side--
+-Draw One --> Once played, the next player needs to draw one card from the Draw pile and skip their turn. You can only play this card if it’s the same color as the Discard pile card, or on another Draw One card of any color on it. Note that this refers to another Draw One card played by a player whose turn came before you and does not imply stacking – you are not allowed to stack cards in Uno. If turned up as the first card when the game begins, the first player (on the dealer’s left) must draw a card and skip their turn.
+
+-Skip --> When played, the next player must skip their turn. This card can only be played on top of a same-color card or another Skip card of any color (put down by an earlier player). If this is the first card turned up to start the game, the first player must skip their turn, and the next player (to his/her left) goes instead.
+
+-Reverse --> This card turns the direction of play to the opposite direction. You can only play this card on a matching color card, or on another Reverse card. If this is the first card turned up at the start of the game, the first player on the dealer’s left (who is supposed to go first) is skipped and the dealer goes first instead, followed by the player to his/her right. The direction of play also begins counter-clockwise (instead of the usual clockwise direction).
+
+-Wild card --> This card enables the player who plays it to choose what color they want to continue play. You can play this card even if you have other playable cards (that matches the card on top of the Discard pile), because the Wild card can represent ANY color. If turned up at the start of play, the first player gets to choose what color to continue play.
+
+-Wild Draw Two --> Although a Wild card, but this card also forces the next player to draw 2 cards from the Draw pile and skip their turn. Unlike the normal Wild card that can be played with or without any matching color cards, you should only play this when you do NOT have any suitable matching color cards.
+
+If the next player suspects you played this card “illegally”, they are entitled to challenge you to show your hand to him/her. If it’s proven that you do have matching color cards in your hand and thus played that Wild Draw Two illegally, you must draw 2 cards instead of the challenger. But if proven innocent (and you indeed have no matching color cards), the challenger must draw 4 cards instead!
+
+-Flip card --> This card can only be played on top of a matching color card or another Flip card. When you play the Flip card while the game is on the Light Side, all the cards must be flipped over to the Dark Side. This includes the Discard pile (the topmost Flip card that was just played now goes to the bottom), the Draw pile, and everyone’s cards in their hands (now everyone must turn the Dark Side to face themselves while the Light Side faces the opponents).
+
+Like the Reverse card, this new side remains in play until changed over by a new Flip card being played. If turned up at the start of play, everything must flip and the first player must now match that Flip card with a matching color card (or another Flip)!
+
+--Dark Side--
+-Draw Five --> When this card is played, the next player must draw 5 cards from the Draw pile and skip their turn. Whoa, 5 cards may seem like a lot to some! You can only play this card on a similarly colored card or on another Draw Five card lying on the Discard pile.
+
+-Skip Everyone --> This Skip is slightly different from the Light Side Skip card. When played, ALL other players are skipped, and the player who played it effectively gets another turn again. You can only play this card on another card of the same color or on another Skip Everyone (of any color).
+
+-Reverse --> This card changes the direction of play, from clockwise to anti-clockwise, and vice-versa. You can only play this card on a card of the same color, or on another Reverse of any color.
+
+-Wild card --> Playing this color allows you to choose ANY color you want in order to continue play. This means you can also choose to maintain the color that is currently in play. Also, you can play this card even though you have other suitable cards in hand.
+
+-Wild Draw Color card --> This card is dreadful. When you play this card, specify the color you want, and the next player has to draw cards until they get a card with the color of your choice (and miss their turn). It doesn’t matter how many cards they need to draw as long as they draw a card with your chosen color!
+
+But just like the Wild Draw Two card from the Light Side, you can only play this card if you don’t have any card in hand that matches the color of the topmost card on the Discard pile. You can still play this card anyway, but the next player is also allowed to challenge you to show your hand and prove you played the Wild Draw Color card legally. If guilty, you have to draw cards instead, until you get the chosen color. But if innocent, the challenger has to draw cards until they get the chosen color PLUS 2 more cards!
+
+-Flip card --> The Dark Side Flip card works in the same way as the Light Side Flip card (see above). When played by someone, ALL the cards have to be flipped over from the Dark Side to the Light Side. This includes the Draw pile, Discard pile, and everyone’s cards in their hands. The Flip card can only be played on a card of the same color or another Flip card, and once changed, the new side remains in play until a new Flip card is played.
+
+Scoring:
+-Numbered cards (0-9) --> Face value
+-Draw One --> 10 points
+-Draw Five/Reverse/Skip/Flip --> 20 points each
+-Skip Everyone --> 30 points
+-Wild --> 40 points
+-Wild Draw Two --> 50 points
+-Wild Draw Color --> 60 points
+
+Highest is the Winner:
+The winner is the first player to achieve 500 or more points.
+
+
+Lowest is the Winner:
+When someone reaches 500 points, the player with the lowest points is declared the winner
+
+

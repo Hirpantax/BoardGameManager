@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -21,7 +22,13 @@ namespace BoardGameManager
         private List<string> playerNameList = new List<string>();
         private List<int> playerPointList = new List<int>();
         private int playerInitialPoint = 0;
-        private int roundCount = 0;
+        private int roundCount = 1;
+        private const string FILE_PATH = "UnoFlip.txt";
+        private const string RULES_HEADER = "Rules:";
+        private const string ACTION_CARDS_HEADER = "Action Cards:";
+        private const string SCORING_HEADER = "Scoring:";
+        private const string HIGHEST_IS_WINNER_HEADER = "Highest is the Winner:";
+        private const string LOWEST_IS_WINNER_HEADER = "Lowest is the Winner:";
 
         public UnoFlip()
         {
@@ -54,11 +61,19 @@ namespace BoardGameManager
         {
            InitializeGame();
 
+           
            int pointCapPlayer = IsGameOver();
-           while (pointCapPlayer == -1)
+            bool isRoundOver = false;
+
+            while (pointCapPlayer == -1)
             {
+                while (!isRoundOver)
+                {
+                    isRoundOver = PrintEndOfRoundMenu();
+                }
                 ProgressOneRound();
                 pointCapPlayer = IsGameOver();
+                isRoundOver = false;
             }
 
             Console.WriteLine();
@@ -112,9 +127,9 @@ namespace BoardGameManager
 
         private void ProgressOneRound()
         {
-            roundCount++;
-            Console.WriteLine("ROUND: {0}", roundCount);
-            PrintPlayerList();
+            //roundCount++;
+            //Console.WriteLine("ROUND: {0}", roundCount);
+            PrintPlayerList(false);
             Console.WriteLine();
             Console.Write("Enter the ID of the player who won the round {0}: ", roundCount);
             string roundWinnerID = Console.ReadLine();
@@ -163,7 +178,7 @@ namespace BoardGameManager
                         if (i == winnerID) continue;
                         Console.Write("Enter the points {0} is left with: ", playerNameList[i]);
 
-                        while (!int.TryParse(Console.ReadLine(), out point))
+                        while (!int.TryParse(Console.ReadLine(), out point) || point < 0)
                         {
                             Console.Write("Invalid input. Please enter again: ");
                         }
@@ -179,7 +194,7 @@ namespace BoardGameManager
                     break;
             }
 
-            PrintPlayerList();
+            PrintPlayerList(true);
             Console.Write("Press U to undo the last round, or any other key to continue.");
             if (Console.ReadKey().Key == ConsoleKey.U)
             {
@@ -199,35 +214,96 @@ namespace BoardGameManager
                 
                 Console.WriteLine();
                 Console.WriteLine("Last round undone.");
-                roundCount--;
+                //roundCount--;
+            }
+            else
+            {
+                roundCount++;
             }
 
             Console.WriteLine();
         }
 
-        private void PrintPlayerList()
+        private void PrintFileSection(string filePath, string sectionHeader)
         {
-            Console.WriteLine("--------------------------------------");
-            //Console.WriteLine("Player List");
-            //Console.WriteLine("--------------------------------------");
-            Console.WriteLine("Player ID\tPlayer Name\tPoints");
-
-
-            for (int i = 0; i < playerCount; i++)
+            try
             {
-                Console.Write(i + 1 + "\t\t");
-                Console.Write(playerNameList[i] + "\t\t");
-                Console.WriteLine(playerPointList[i]);
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    bool printLines = false;
+                    string line;
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        // Check if the current line is a section header
+                        if (line.Trim().Equals(sectionHeader))
+                        {
+                            printLines = true; // Start printing lines
+                            //continue; // Skip the header line
+                        }
+
+                        // Check for another section header to stop printing
+                        if (printLines && line.EndsWith(":") && !line.Trim().Equals(sectionHeader))
+                        {
+                            break;
+                        }
+
+                        if (printLines)
+                        {
+                            Console.WriteLine(line);
+                        }
+                    }
+                }
             }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred: " + e.Message);
+            }
+        }
+
+        private void PrintPlayerList(bool includePoints)
+        {
+            switch (includePoints)
+            {
+                case true:
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("Player ID\tPlayer Name\tPoints");
+
+
+                    for (int i = 0; i < playerCount; i++)
+                    {
+                        Console.Write(i + 1 + "\t\t");
+                        Console.Write(playerNameList[i] + "\t\t");
+                        Console.WriteLine(playerPointList[i]);
+                    }
+                    break;
+
+                case false:
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("Player ID\tPlayer Name");
+
+
+                    for (int i = 0; i < playerCount; i++)
+                    {
+                        Console.Write(i + 1 + "\t\t");
+                        Console.WriteLine(playerNameList[i] + "\t\t");
+                    }
+                    break;
+            }
+
         }
 
         private void InitializeGame()
         {
+            Console.WriteLine();
+            Console.WriteLine("Game Modes:");
+
+            PrintFileSection(FILE_PATH, HIGHEST_IS_WINNER_HEADER);
+            PrintFileSection(FILE_PATH, LOWEST_IS_WINNER_HEADER);
+
             string[] gameModeNames = Enum.GetNames(typeof(GameMode));
             GameMode[] gameModes = (GameMode[])Enum.GetValues(typeof(GameMode));
             int gameMode;
-            Console.WriteLine();
-            Console.WriteLine("Game Modes:");
 
             for (int i = 0; i < gameModeNames.Length; i++)
             {
@@ -244,6 +320,8 @@ namespace BoardGameManager
             gameMode--; //Index
 
             this.gameMode = gameModes[gameMode];
+
+            PrintFileSection(FILE_PATH, RULES_HEADER);
 
             string playerNameTemp;
             bool playerCountConfirmation = false;
@@ -280,6 +358,41 @@ namespace BoardGameManager
                 playerNameList.Add(playerNameTemp);
                 playerPointList.Add(playerInitialPoint);
             }
+
+        }
+
+        private bool PrintEndOfRoundMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("ROUND: {0}", roundCount);
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("1. Display Action Card Info");
+            Console.WriteLine("2. Display Card Values");
+            Console.WriteLine("3. End Round");
+            Console.Write("Enter the ID of your choice: ");
+            int menuOption;
+
+            while (!int.TryParse(Console.ReadLine(), out menuOption) || !(menuOption >=1 && menuOption <=3))
+            {
+                Console.Write("Invalid input. Please enter again: ");
+            }
+
+            switch (menuOption)
+            {
+                default:
+                case 1:
+                    PrintFileSection(FILE_PATH, ACTION_CARDS_HEADER);
+                    return false;
+
+                case 2:
+                    PrintFileSection(FILE_PATH, SCORING_HEADER);
+                    return false;
+
+                case 3:
+                    return true;
+
+            }
+
         }
 
         private int IsGameOver()

@@ -4,7 +4,7 @@ using BoardGameManager;
 
 public class Program
 {
-    private static List<string> gameList = new List<string> { "Uno Flip", "Classic Uno" };
+    private static List<string> gameList = new List<string> { "Uno Flip (2 - 10 Players)", "Original Uno (2 - 10 Players)" };
     static void Main(string[] args)
     {
         Game game;
