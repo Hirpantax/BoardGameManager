@@ -10,6 +10,8 @@ namespace BoardGameManager
     {
         protected string gameName;
         protected int playerCount;
+        protected int minPlayerCount;
+        protected int maxPlayerCount;
 
         public abstract void PlayGame();
 

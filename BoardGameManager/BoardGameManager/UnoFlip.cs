@@ -26,6 +26,8 @@ namespace BoardGameManager
         public UnoFlip()
         {
             gameName = "Uno Flip";
+            minPlayerCount = 2;
+            maxPlayerCount = 10;
         }
 
         public override void UpdatePlayerPoints(int playerID, int points)
@@ -244,13 +246,27 @@ namespace BoardGameManager
             this.gameMode = gameModes[gameMode];
 
             string playerNameTemp;
-            Console.Write("Enter the amount of players: ");
-            
-            while (!int.TryParse(Console.ReadLine(), out playerCount))
-            {
-                Console.WriteLine("Invalid input. Please enter again: ");
-            }
+            bool playerCountConfirmation = false;
 
+            while (!playerCountConfirmation)
+            {
+                Console.Write("Enter the amount of players: ");
+
+                while (!int.TryParse(Console.ReadLine(), out playerCount) || !(playerCount >= minPlayerCount && playerCount <= maxPlayerCount))
+                {
+                    Console.Write("Invalid input. Please enter again: ");
+                }
+                Console.Write("{0} player profiles will be created. Press Y if you confirm, or any other key if you don't: ", playerCount);
+
+                if (Console.ReadKey().Key == ConsoleKey.Y)
+                {
+                    playerCountConfirmation = true;
+                }
+                Console.WriteLine();    
+            }
+        
+
+           
             for (int i = 0; i < playerCount; i++)
             {
                 Console.Write("Enter the name of the player number {0}: ", i + 1);
